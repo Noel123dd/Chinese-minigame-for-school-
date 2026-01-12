@@ -58,7 +58,7 @@ if not st.session_state.quiz_complete:
 
     if st.button("Submit Answer"):
         if answer == correct:
-            st.success("Correct! ✨")
+            st.success("Correct!")
             st.session_state.score += 1
         else:
             st.error(f"Wrong! The correct answer was: {correct}")
@@ -72,7 +72,7 @@ if not st.session_state.quiz_complete:
 
 else:
     st.balloons()
-    st.header("🎉 Quiz Completed!")
+    st.header("Quiz Completed!")
     
     percent = (st.session_state.score / total_len) * 100
     st.metric("Final Score", f"{st.session_state.score} / {total_len}", f"{percent}%")
