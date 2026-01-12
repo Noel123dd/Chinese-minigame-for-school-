@@ -11,26 +11,38 @@ vocab = [
     {"char": "妈妈", "pinyin": "māma", "def": "mom"},
     {"char": "哥哥", "pinyin": "gēge", "def": "elder brother"},
     {"char": "姐姐", "pinyin": "jiějie", "def": "elder sister"},
-    {"char": "只", "pinyin": "zhǐ", "def": "only"}
+    {"char": "只", "pinyin": "zhǐ", "def": "only"},
+    {"char": "孩子", "pinyin": "háizi", "def": "child"},
+    {"char": "多", "pinyin": "duō", "def": "many"},
+    {"char": "家庭", "pinyin": "jiātíng", "def": "family unit"},
+    {"char": "一般", "pinyin": "yìbān", "def": "in general"},
+    {"char": "弟弟", "pinyin": "dìdi", "def": "younger brother"},
+    {"char": "妹妹", "pinyin": "mèimei", "def": "younger sister"},
+    {"char": "还", "pinyin": "hái", "def": "in addition"},
+    {"char": "条", "pinyin": "tiáo", "def": "measure word"},
+    {"char": "狗", "pinyin": "gǒu", "def": "dog"},
+    {"char": "这样", "pinyin": "zhèyàng", "def": "like this, this way"}
 ]
 
 if 'score' not in st.session_state:
     st.session_state.score = 0
     st.session_state.current_q = 0
     st.session_state.quiz_complete = False
-    random.shuffle(vocab)
-    st.session_state.shuffled_vocab = vocab
+    shuffled = vocab.copy()
+    random.shuffle(shuffled)
+    st.session_state.shuffled_vocab = shuffled
 
 st.title("Chinese Character Quiz (Lesson 10)")
-st.write("Test your knowledge of these 10 words!")
 st.write("Created by Noel Kim")
+st.divider()
 
+total_len = len(st.session_state.shuffled_vocab)
 
 if not st.session_state.quiz_complete:
     idx = st.session_state.current_q
     word = st.session_state.shuffled_vocab[idx]
     
-    st.subheader(f"Question {idx + 1} of 10")
+    st.subheader(f"Question {idx + 1} of {total_len}")
     st.info(f"What does this mean? **{word['char']}** ({word['pinyin']})")
 
     correct = word['def']
@@ -51,7 +63,7 @@ if not st.session_state.quiz_complete:
         else:
             st.error(f"Wrong! The correct answer was: {correct}")
 
-        if st.session_state.current_q < 9:
+        if st.session_state.current_q < (total_len - 1):
             st.session_state.current_q += 1
             st.rerun() 
         else:
@@ -60,8 +72,10 @@ if not st.session_state.quiz_complete:
 
 else:
     st.balloons()
-    st.header("Quiz Completed!")
-    st.metric("Final Score", f"{st.session_state.score} / 10")
+    st.header("🎉 Quiz Completed!")
+    
+    percent = (st.session_state.score / total_len) * 100
+    st.metric("Final Score", f"{st.session_state.score} / {total_len}", f"{percent}%")
     
     if st.button("Restart Quiz"):
         st.session_state.score = 0
