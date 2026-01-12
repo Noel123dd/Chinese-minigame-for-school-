@@ -23,6 +23,8 @@ if 'score' not in st.session_state:
 
 st.title("Chinese Character Quiz (Lesson 10)")
 st.write("Test your knowledge of these 10 words!")
+st.write("Created by Noel Kim")
+
 
 if not st.session_state.quiz_complete:
     idx = st.session_state.current_q
